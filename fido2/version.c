@@ -13,5 +13,5 @@ __attribute__ ((section (".flag"))) __attribute__ ((__used__))
 
 
 // from tinycbor, for a quick static_assert
-#include <compilersupport_p.h>
-cbor_static_assert(sizeof(version_t) == 4);
+//#include <compilersupport_p.h>
+//cbor_static_assert(sizeof(version_t) == 4);
