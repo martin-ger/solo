@@ -19,8 +19,8 @@ idf_component_register(SRCS	"crypto/tiny-AES-c/aes.c"
 				"fido2/extensions/extensions.c"
 				"fido2/extensions/solo.c"
 				"fido2/extensions/wallet.c"
-				"esp32/device.c"
-                    INCLUDE_DIRS fido2 fido2/extensions crypto/sha256 crypto/tiny-AES-c/ crypto/cifra/src crypto/cifra/src/ext crypto/micro-ecc esp32
+				"targets/esp32/device.c"
+                    INCLUDE_DIRS fido2 fido2/extensions crypto/sha256 crypto/tiny-AES-c/ crypto/cifra/src crypto/cifra/src/ext crypto/micro-ecc targets/esp32
                     REQUIRES cbor nvs_flash)
 
 target_compile_definitions(${COMPONENT_LIB} PRIVATE "APP_CONFIG=\"app.h\"")
