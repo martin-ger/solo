@@ -29,6 +29,9 @@
 #define ESP32_RKEYS "AuthResidentKeys"
 
 #define BUTTON_GPIO GPIO_NUM_0
+#define LED_GPIO GPIO_NUM_2
+#define LED_ON 1
+#define LED_OFF 0
 
 #define RK_NUM  50
 
@@ -83,6 +86,12 @@ void authenticator_write_state(AuthenticatorState * s)
     }
 }
 
+void device_set_led(uint8_t state)
+{
+    gpio_set_direction(LED_GPIO, GPIO_MODE_OUTPUT);
+    gpio_set_level(LED_GPIO, state);
+}
+
 int device_is_button_pressed()
 {
     gpio_set_direction(BUTTON_GPIO, GPIO_MODE_INPUT);
@@ -94,6 +103,8 @@ static bool disable_next_up = false;
 
 int ctap_user_presence_test(uint32_t delay)
 {
+    device_set_led(LED_ON);
+
     if (disable_next_up) {
         //disable_next_up = false;
         return 2;
@@ -104,11 +115,13 @@ int ctap_user_presence_test(uint32_t delay)
 
     while (millis() < delay_end) {
         if (device_is_button_pressed() != initial_button_state) {
+            device_set_led(LED_OFF);
             return 1;
         }
         vTaskDelay(pdMS_TO_TICKS(10));
         esp_task_wdt_reset();
     }
+    device_set_led(LED_OFF);
     return 0;
 }
 
